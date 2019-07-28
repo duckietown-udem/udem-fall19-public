@@ -1,0 +1,8 @@
+# challenge name(s); defaults to all compatible challenges
+# challenge: [c1,c2]
+
+protocol: aido2_db18_agent-z2
+user-label: "AIDO Class"
+user-payload: {}
+description: |
+    Test
