@@ -57,9 +57,12 @@ def jpg2rgb(image_data: bytes) -> np.ndarray:
     assert data.dtype == np.uint8
     return data
 
-def launch_env():
+def launch_env(simclass=None):
     from simulation.gym_duckietown.simulator import Simulator
-    env = Simulator(
+
+    simclass = Simulator if simclass is None else simclass
+
+    env = simclass(
         seed=123, # random seed
         map_name="loop_empty",
         max_steps=500001, # we don't want the gym to reset itself
@@ -77,6 +80,7 @@ def change_exercise(exercise='master'):
     
     repo = Repo('./simulation')
     repo.git.checkout(exercise)
+    print('Exercise successfully changed to', exercise)
 
 def wrap_env(env, results_path='./gym_results', force=True):
     from gym import wrappers
