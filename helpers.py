@@ -1,6 +1,8 @@
 from dataclasses import dataclass
 from typing import Tuple
 
+import torch
+import random
 import numpy as np
 import gym
 from gym import spaces
@@ -197,5 +199,26 @@ class ImgWrapper(gym.ObservationWrapper):
     def observation(self, observation):
         return observation.transpose(2, 0, 1)
 
+def seedall(seed):
+    torch.manual_seed(seed)
+    np.random.seed(seed)
+    random.seed(seed)
+
 def force_done(env):
     env.done = True
+
+def evaluate_policy(env, policy, eval_episodes=10, max_timesteps=500):
+    avg_reward = 0.
+    for _ in range(eval_episodes):
+        obs = env.reset()
+        done = False
+        step = 0
+        while not done and step < max_timesteps:
+            action = policy.predict(np.array(obs))
+            obs, reward, done, _ = env.step(action)
+            avg_reward += reward
+            step += 1
+
+    avg_reward /= eval_episodes
+
+    return avg_reward
