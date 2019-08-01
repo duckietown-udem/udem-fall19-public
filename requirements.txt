@@ -29,3 +29,4 @@ numpy==1.16.2
 
 # Class exercises
 torch==1.0.0
+pillow
