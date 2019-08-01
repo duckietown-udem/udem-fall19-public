@@ -26,3 +26,6 @@ numpy==1.16.2
 
 -e git://github.com/duckietown/duckietown-world.git@aido2_lf_r1#egg=duckietown-world
 -e git://github.com/duckietown/duckietown-challenges.git@v4#egg=duckietown-challenges
+
+# Class exercises
+torch==1.0.0
