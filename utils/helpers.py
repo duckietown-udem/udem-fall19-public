@@ -9,8 +9,7 @@ from gym import spaces
 
 from aido_schemas import EpisodeStart, protocol_agent_duckiebot1, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
     wrap_direct, Context, Duckiebot1Observations, JPGImage, Context
-
-# from simulation.gym_duckietown.simulator import Simulator
+    
 
 class AIDOSubmission:
     def __init__(self, exercise='test'):

@@ -1,7 +1,8 @@
-from helpers import AIDOSubmission, submit_aido, jpg2rgb
-from aido_schemas import JPGImage
+from utils.helpers import AIDOSubmission, submit_aido, jpg2rgb
+from aido_schemas import JPGImage, Duckiebot1Observations
 
-from custom_helpers import encouragement
+from custom.custom_helpers import encouragement
+import numpy as np
 
 class YourAIDOSubmission(AIDOSubmission):
     def on_received_observations(self, data: Duckiebot1Observations):
