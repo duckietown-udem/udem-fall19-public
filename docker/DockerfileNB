@@ -1,0 +1,23 @@
+FROM osrf/ros:melodic-desktop-full-bionic
+RUN apt-get update \
+    && apt-get install -y python3-pip build-essential \
+    && apt-get -y autoremove \
+    && apt-get -y clean  \
+    && rm -rf /var/lib/apt/lists/*
+
+RUN python3 -m pip install pip -U \
+    && python3 -m pip install jupyter numpy scipy pandas sklearn matplotlib \
+    && rm -r /root/.cache/pip
+
+RUN apt-get install python3-pip
+RUN pip3 install rospkg catkin_pkg pyyaml jupyros
+RUN jupyter nbextension enable --py --sys-prefix jupyros
+
+RUN mkdir duckietown
+COPY setup/requirements.txt duckietown
+COPY setup/initial.sh duckietown
+
+RUN cd duckietown && ./initial.sh 
+
+WORKDIR /duckietown
+CMD jupyter-notebook --allow-root --ip="*" --no-browser 
