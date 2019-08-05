@@ -6,6 +6,8 @@ import random
 import numpy as np
 import gym
 from gym import spaces
+import math
+import matplotlib.pyplot as plt
 
 from aido_schemas import EpisodeStart, protocol_agent_duckiebot1, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
     wrap_direct, Context, Duckiebot1Observations, JPGImage, Context
@@ -221,3 +223,192 @@ def evaluate_policy(env, policy, eval_episodes=10, max_timesteps=500):
     avg_reward /= eval_episodes
 
     return avg_reward
+
+
+
+
+def plot_poses(poses, goal = False, draw_line=False):
+    coords = np.array([p[0] for p in poses])
+    xmin = np.min(coords[:, 0])
+    xmax = np.max(coords[:, 0])
+    ymin = np.min(coords[:, 1])
+    ymax = np.max(coords[:, 1])
+    
+    if goal:
+        xmin = np.minimum(xmin, goal[0])
+        xmax = np.maximum(xmax, goal[0])
+        ymin = np.minimum(ymin, goal[1])
+        ymax = np.maximum(ymax, goal[1])
+
+    plt.axis([xmin - 0.1, xmax + 0.1, ymin - 0.1, ymax + 0.1])
+    for i, p in enumerate(poses):
+        x = p[0][0]
+        y = p[0][1]
+        arrow_angle = math.radians(p[1])
+        
+        if i == len(poses) -1:
+            plt.arrow(x, y, 0.001 * math.cos(arrow_angle), 0.001 * math.sin(arrow_angle),
+                 head_width=0.1, head_length=0.16,
+                  fc='r', ec='r')
+        else:
+            plt.arrow(x, y, 0.001 * math.cos(arrow_angle), 0.001 * math.sin(arrow_angle),
+                 head_width=0.1, head_length=0.16,
+                  fc='k', ec='k')
+            
+    if goal:
+        plt.arrow(goal[0], goal[1], 0.001 * math.cos(math.radians(goal[2])), 0.001 * math.sin(math.radians(goal[2])), head_width=0.1, head_length=0.16,
+                  fc='g', ec='g')
+        final_pose = poses[-1]
+        if math.fabs(final_pose[0][0] - goal[0]) < 0.01 and math.fabs(final_pose[0][1] - goal[1]) < 0.01 and math.fabs(final_pose[1] - goal[2]) < 0.1:
+            print("Goal achieved! Great job!")
+            
+    if draw_line:
+        plt.hlines(0, 0, xmax, linestyles='dashed', colors='r')
+
+
+def rotate_point(px, py, cx, cy, theta):
+    """
+    Rotate a 2D point around a center
+    """
+
+    dx = px - cx
+    dy = py - cy
+
+    new_dx = dx * math.cos(theta) - dy * math.sin(theta)
+    new_dy = dy * math.cos(theta) + dx * math.sin(theta)
+
+    return cx + new_dx, cy + new_dy
+  
+def get_dir_vec(angle):
+    """
+    Vector pointing in the direction the agent is looking (angle in degrees)
+    """
+    dir_angle = math.radians(angle)
+    x = math.cos(dir_angle)
+    y = math.sin(dir_angle)
+    return np.array([x, y])
+
+def get_right_vec(angle):
+    """
+    Vector pointing to the right of the agent (angle in degrees)
+    """
+    dir_angle = math.radians(angle)
+
+    x = math.sin(dir_angle)
+    y = -math.cos(dir_angle)
+    return np.array([x, y])
+
+def drive(cur_pos, cur_angle, left_rate, right_rate, wheel_dist, wheel_radius, dt):
+    """
+    Drive this bad boy
+    """
+    cur_pos = np.array(cur_pos)
+    
+    Vl = left_rate * wheel_radius * np.pi * 2
+    Vr = right_rate * wheel_radius * np.pi * 2 # rate is in turns/sec
+    l = wheel_dist
+
+    # If the wheel velocities are the same, then there is no rotation
+    if Vl == Vr:
+      cur_pos = cur_pos + dt * Vl * get_dir_vec(cur_angle)
+      return cur_pos, cur_angle
+
+    # Compute the angular rotation velocity about the ICC (center of curvature)
+    w = (Vr - Vl) / l
+    # Compute the velocity
+    v = (Vl + Vr) / 2
+    
+
+    # Compute the distance to the center of curvature
+    r = v/w
+
+    # Compute the rotation angle for this time step
+    rotAngle = w * dt
+
+    # Rotate the robot's position around the center of rotation
+    r_vec = -get_right_vec(cur_angle)
+    px, py = cur_pos
+    cx = px + r * r_vec[0]
+    cy = py + r * r_vec[1]
+    npx, npy = rotate_point(px, py, cx, cy, rotAngle)
+    next_pos = np.array([npx, npy])
+   
+    # Update the robot's direction angle
+    next_angle = cur_angle + math.degrees(rotAngle)
+    return next_pos, next_angle
+
+def calibrate_drive(cur_pos, cur_angle, gain, trim, dt, seed):
+    limit = 1
+    l = 0.2                  # 0.2 meters of distance between the wheels
+    wheel_radius = 0.03      # radius of the wheels is 0.03 meters (3 cm) as we know it
+    
+    desired_rate = 1                           # Turns per second
+    desired_omega = 2*np.pi * desired_rate     # In radians
+    
+    desired_omega_r = desired_omega
+    desired_omega_l = desired_omega
+       
+    
+    k = 27                                     # Motor constant as we know it
+    
+    k_r_inv = (gain + trim) / k                # Inverse motor constant after trim
+    k_l_inv = (gain - trim) / k                
+    
+    
+    # conversion from motor rotation rate to duty cycle, according to what we know
+    u_r = desired_omega_r * k_r_inv
+    u_l = desired_omega_l * k_l_inv
+    
+    # limiting output to limit, which is 1.0 for the duckiebot
+    u_r_limited = max(min(u_r, limit), -limit)
+    u_l_limited = max(min(u_l, limit), -limit)
+    
+    # Modelling the real values of radius and motor constants
+    np.random.seed(seed)
+    radius_r = np.random.uniform(wheel_radius - 0.0015, wheel_radius + 0.0015)
+    radius_l = np.random.uniform(wheel_radius - 0.0015, wheel_radius + 0.0015)
+    k_l_noisy = np.random.uniform(k - 0.25, k + 0.25)
+    k_r_noisy = np.random.uniform(k - 0.25, k + 0.25)
+
+    # Real values of inverse motor constants
+    k_r_inv_noisy = 1/k_r_noisy
+    k_l_inv_noisy = 1/k_l_noisy
+
+    # Real values of wheel angular velocity
+    omega_r_limited = u_r_limited/k_r_inv_noisy
+    omega_l_limited = u_l_limited/k_l_inv_noisy
+    
+    # Real wheel velocities
+    Vr = omega_r_limited * radius_r
+    Vl = omega_l_limited * radius_l
+    
+
+    # If the wheel velocities are the same, then there is no rotation
+    if Vl == Vr:
+        cur_pos = cur_pos + dt * Vr * get_dir_vec(cur_angle)
+        return cur_pos, cur_angle
+
+    
+    # Compute the angular rotation velocity about the ICC (center of curvature)
+    w = (Vr - Vl) / l
+    # Compute the velocity
+    v = (Vl + Vr) / 2
+
+    # Compute the distance to the center of curvature
+    r = v/w
+
+    # Compute the rotation angle for this time step
+    rotAngle = w * dt
+
+    # Rotate the robot's position around the center of rotation
+    r_vec = -get_right_vec(cur_angle)
+    px, py = cur_pos
+    cx = px + r * r_vec[0]
+    cy = py + r * r_vec[1]
+    npx, npy = rotate_point(px, py, cx, cy, rotAngle)
+    next_pos = np.array([npx, npy])
+   
+    # Update the robot's direction angle
+    next_angle = cur_angle + math.degrees(rotAngle)
+    
+    return next_pos, next_angle
