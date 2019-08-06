@@ -224,9 +224,6 @@ def evaluate_policy(env, policy, eval_episodes=10, max_timesteps=500):
 
     return avg_reward
 
-
-
-
 def plot_poses(poses, goal = False, draw_line=False):
     coords = np.array([p[0] for p in poses])
     xmin = np.min(coords[:, 0])

@@ -1,3 +1,4 @@
+# FROM duckietown/aido2-base-python3:z2
 FROM osrf/ros:melodic-desktop-full-bionic
 RUN apt-get update \
     && apt-get install -y python3-pip build-essential \

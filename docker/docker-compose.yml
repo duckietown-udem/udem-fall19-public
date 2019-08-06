@@ -1,9 +1,10 @@
 version: '3'
 services:
     duckietown-notebook:
-        build:
-            context: .
-            dockerfile: DockerfileNB
+        image: duckietown/dt-notebook:udem
+        # build:
+        #     context: .
+        #     dockerfile: DockerfileNB
         depends_on:
         - "rosmaster"
         networks:
@@ -11,6 +12,9 @@ services:
         volumes:
         - ./software/:/duckietown/software/
         - ./simulation/:/duckietown/simulation/
+        - ./notebooks/:/duckietown/notebooks/
+        - ./utils/:/duckietown/utils/
+        - ./custom/:/duckietown/custom/
         expose:
         - "8888"
         ports:
@@ -21,7 +25,7 @@ services:
         - "ROS_MASTER_URI=http://rosmaster:11311"
 
     rosmaster:
-        image: osrf/ros:melodic-desktop-full-bionic
+        image: duckietown/rpi-duckiebot-base:master19-no-arm
         networks:
         - duckietown-docker-net
         command: 
