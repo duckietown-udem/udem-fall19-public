@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /duckietown/custom_ws/devel/setup.sh

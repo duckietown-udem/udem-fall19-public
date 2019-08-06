@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <launch>
     <!-- start basic args -->
-    <arg name="veh" default="default"/>
+    <arg name="veh" default="baseline"/>
     <arg name="config" default="baseline" />
     <arg name="param_file_name" default="default" />
     <arg name="verbose" default="true" />
@@ -16,7 +16,9 @@
 
     <arg name="inverse_kinematics" default="true"/>
 
-    <node name="gymdt" pkg="duckietown_msgs" type="gymdt_node" />
+    <group>
+        <node name="gymdt" pkg="gymdt" type="gymdt_node.py" />
+    </group>
 
     <group if="$(arg lane_following)">
 
