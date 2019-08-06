@@ -1,10 +1,10 @@
 version: '3'
 services:
     duckietown-notebook:
-        image: duckietown/dt-notebook:udem
-        # build:
-        #     context: .
-        #     dockerfile: DockerfileNB
+        # image: duckietown/dt-notebook:udem
+        build:
+            context: .
+            dockerfile: DockerfileNB
         depends_on:
         - "rosmaster"
         networks:
@@ -15,6 +15,7 @@ services:
         - ./notebooks/:/duckietown/notebooks/
         - ./utils/:/duckietown/utils/
         - ./custom/:/duckietown/custom/
+        - ./dt_msg_ws/:/duckietown/dt_msg_ws/
         expose:
         - "8888"
         ports:
@@ -23,6 +24,7 @@ services:
         - /tmp/.X11-unix:/tmp/.X11-unix
         environment:
         - "ROS_MASTER_URI=http://rosmaster:11311"
+        - "ROS_PYTHON_VERSION=3"
 
     rosmaster:
         image: duckietown/rpi-duckiebot-base:master19-no-arm
@@ -32,6 +34,8 @@ services:
         - roscore
         environment:
         - "ROS_MASTER_URI=http://rosmaster:11311"
+        - "HOSTNAME=default"
+
 
 networks:
     duckietown-docker-net:

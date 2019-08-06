@@ -1,0 +1,2 @@
+- setup-file:
+    local-name: /duckietown/dt_msg_ws/devel/setup.sh

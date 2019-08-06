@@ -1,7 +1,8 @@
 # FROM duckietown/aido2-base-python3:z2
 FROM osrf/ros:melodic-desktop-full-bionic
+
 RUN apt-get update \
-    && apt-get install -y python3-pip build-essential \
+    && apt-get install -y python3-pip build-essential xvfb \
     && apt-get -y autoremove \
     && apt-get -y clean  \
     && rm -rf /var/lib/apt/lists/*
@@ -19,6 +20,9 @@ COPY setup/requirements.txt duckietown
 COPY setup/initial.sh duckietown
 
 RUN cd duckietown && ./initial.sh 
+
+COPY setup/run_display.bash duckietown
+RUN chmod u+x duckietown/run_display.bash
 
 WORKDIR /duckietown
 CMD jupyter-notebook --allow-root --ip="*" --no-browser 
