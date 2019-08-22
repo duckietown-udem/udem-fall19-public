@@ -2,7 +2,7 @@
 FROM osrf/ros:melodic-desktop-full-bionic
 
 RUN apt-get update \
-    && apt-get install -y python3-pip build-essential xvfb python-frozendict python-ruamel.yaml \
+    && apt-get install -y python3-pip build-essential xvfb python-frozendict ffmpeg python-ruamel.yaml \
     && apt-get -y autoremove \
     && apt-get -y clean  \
     && rm -rf /var/lib/apt/lists/*
