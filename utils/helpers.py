@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from aido_schemas import EpisodeStart, protocol_agent_duckiebot1, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
     wrap_direct, Context, Duckiebot1Observations, JPGImage, Context
     
-
+from simulation.gym_duckietown.simulator import Simulator
 class AIDOSubmission:
     def __init__(self, exercise='test'):
         self.exercise = exercise
@@ -62,14 +62,14 @@ def jpg2rgb(image_data: bytes) -> np.ndarray:
     assert data.dtype == np.uint8
     return data
 
-def launch_env(simclass=None):
+def launch_env(simclass=None, map_name = "loop_empty"):
     from simulation.gym_duckietown.simulator import Simulator
 
     simclass = Simulator if simclass is None else simclass
-
+    
     env = simclass(
         seed=123, # random seed
-        map_name="loop_empty",
+        map_name=map_name,#"loop_empty",
         max_steps=500001, # we don't want the gym to reset itself
         domain_rand=0,
         camera_width=640,
@@ -83,7 +83,7 @@ def launch_env(simclass=None):
 def change_exercise(exercise='master'):
     from git import Repo
     
-    repo = Repo('./simulation')
+    repo = Repo('../simulation')
     repo.git.checkout(exercise)
     print('Exercise successfully changed to', exercise)
 
@@ -409,3 +409,44 @@ def calibrate_drive(cur_pos, cur_angle, gain, trim, dt, seed):
     next_angle = cur_angle + math.degrees(rotAngle)
     
     return next_pos, next_angle
+
+class topViewSimulator(Simulator):
+    
+    def step(self, action: np.ndarray):
+        action = np.clip(action, -1, 1)
+        # Actions could be a Python list
+        action = np.array(action)
+        for _ in range(self.frame_skip):
+            self.update_physics(action)
+
+        # Generate the current camera image
+        obs = self._render_img(640,
+                480,
+                self.multi_fbo,
+                self.final_fbo,
+                np.zeros(shape=self.observation_space.shape, dtype=np.uint8),
+                top_down=True)        
+        misc = self.get_agent_info()
+
+        d = self._compute_done_reward()
+        misc['Simulator']['msg'] = d.done_why
+
+        return obs, d.reward, d.done, misc
+
+def load_env_obstacles(local_env):
+    ##### Loading Circular Obstacles
+    list_obstacles = []
+    for obstacle in local_env.objects:
+        pose = obstacle.pos
+        robot_radius = 0.1
+        radius = obstacle.safety_radius + robot_radius
+        list_obstacles.append([pose[0], pose[2], radius])
+    
+    ###### Non drivable tiles
+    for i in range(local_env.grid_width):
+        for j in range(local_env.grid_height):
+            tile = local_env.grid[j * local_env.grid_width + i]
+            if not tile['drivable']:
+                coords = tile['coords']
+                list_obstacles.append([(coords[0]+.5)*local_env.road_tile_size, (coords[1]+.5)*local_env.road_tile_size, 1.3*local_env.road_tile_size + 2*robot_radius])
+    return list_obstacles
