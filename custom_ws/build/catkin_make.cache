@@ -1,2 +1,0 @@
-gymdt
--DCATKIN_DEVEL_PREFIX=/duckietown/custom_ws/devel -DCMAKE_INSTALL_PREFIX=/duckietown/custom_ws/install -G Unix Makefiles

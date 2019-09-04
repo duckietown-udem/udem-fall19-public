@@ -1,8 +1,0 @@
-prefix=/duckietown/custom_ws/install
-
-Name: gymdt
-Description: Description of gymdt
-Version: 0.0.0
-Cflags: 
-Libs: -L/duckietown/custom_ws/install/lib 
-Requires: 

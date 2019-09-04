@@ -1,3 +1,6 @@
 [submodule "simulation"]
 	path = simulation
 	url = https://github.com/duckietown/gym-duckietown
+[submodule "Software"]
+	path = software
+	url = https://github.com/duckietown/Software
