@@ -1,9 +1,6 @@
 # src installs by pip
 src/
 
-# gym-duckietown
-simulation/
-
 # gym videos
 gym_results/
 
