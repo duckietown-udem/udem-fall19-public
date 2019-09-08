@@ -29,6 +29,10 @@ RUN echo 'source custom_ws/devel/setup.bash' >> ~/.bashrc
 ENV ROS_PYTHON_VERSION 3
 ENV SHELL /bin/bash
 ENV DISPLAY :99
+ENV DUCKIEFLEET_ROOT /data/config
+
+RUN mkdir -p /data/config
+RUN git clone https://github.com/duckietown-udem/config /data/config
 
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 RUN python get-pip.py
