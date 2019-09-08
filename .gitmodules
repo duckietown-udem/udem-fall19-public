@@ -1,6 +1,7 @@
 [submodule "simulation"]
 	path = simulation
 	url = https://github.com/duckietown/gym-duckietown
+	branch = aido2
 [submodule "Software"]
 	path = software
 	url = https://github.com/duckietown/Software
