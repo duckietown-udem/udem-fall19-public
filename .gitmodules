@@ -1,7 +1,16 @@
 [submodule "simulation"]
 	path = simulation
 	url = https://github.com/duckietown/gym-duckietown
-	branch = aido2
-[submodule "Software"]
-	path = software
-	url = https://github.com/duckietown/Software
+        branch = aido2
+[submodule "dt-core"]
+	path = catkin_ws/src/dt-core
+	url = https://github.com/duckietown/dt-core.git
+        branch = daffy
+[submodule "dt-ros-commons"]
+	path = catkin_ws/src/dt-ros-commons
+	url = https://github.com/duckietown/dt-ros-commons.git
+        branch = daffy
+[submodule "dt-duckiebot-interface"]
+	path = catkin_ws/src/dt-duckiebot-interface
+	url = https://github.com/duckietown/dt-duckiebot-interface.git
+        branch = devel20
