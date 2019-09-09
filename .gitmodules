@@ -10,7 +10,3 @@
 	path = catkin_ws/src/dt-ros-commons
 	url = https://github.com/duckietown/dt-ros-commons.git
         branch = daffy
-[submodule "dt-duckiebot-interface"]
-	path = catkin_ws/src/dt-duckiebot-interface
-	url = https://github.com/duckietown/dt-duckiebot-interface.git
-        branch = devel20
