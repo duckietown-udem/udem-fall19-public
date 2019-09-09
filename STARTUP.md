@@ -104,8 +104,8 @@ From here, your system should be mostly setup, and it is time to move into the n
 
 
 ```bash
-docker-compose -f docker-compose-lf.yml build
-docker-compose -f docker-compose-lf.yml up
+docker-compose -f docker-compose.yml build
+docker-compose -f docker-compose.yml up
 ```
 
 This will take quite a while the first time, but when it's finished, it will launch the Jupyter notebook server, which you can access to by pointing your web browser to: `http://127.0.0.1:8888/?token={some_long_token}`. From there, you can open up `notebooks/01-classical-baseline.ipynb` and navigate to the **Running the Lane Following Baseline** section. 
