@@ -33,7 +33,9 @@ To start, let's clone the class repository using the terminal:
 
 Once you clone the repository, step into the repository:
 
+```
     $ cd udem-fall19-public
+```
 
 # Repository Walkthrough
 
