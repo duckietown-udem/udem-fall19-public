@@ -24,14 +24,12 @@ Lastly, it is most convenient (if you are on Mac / Linux) to install the `duckie
 
 For the purposes of these instructions let's call the directory where you want to put all the files for this class as `$AV_ROOT` (whenever you see  you should be in the directory that you are using for the class. 
 
-To start, fork the [class repository](https://github.com/duckietown-udem/udem-fall19-public) (optional, but highly recommended)
+To start, fork the [class repository](https://github.com/duckietown-udem/udem-fall19-public) (optional, but highly recommended). From there, clone the class repository using the terminal:
 
-To start, let's clone the class repository using the terminal:
 ```
     $ cd $AV_ROOT
     $ git clone https://github.com/YOUR_USERNAME/udem-fall19-public --recursive
 ```
-**Note**: If you prefer, you can fork the repository first before cloning. 
 
 Once you clone the repository, step into the repository:
 
