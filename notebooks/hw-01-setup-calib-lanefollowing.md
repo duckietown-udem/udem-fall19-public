@@ -17,11 +17,15 @@ Your professor will ask you to **name your Duckiebot** and provide you with two 
 
 Once you have received your Duckiebot and labeled it and the box, it is time to flash the SD card. If and only if you are running Ubuntu (Linux?) you should be able to do this for yourself. Otherwise you will need help. 
 
-To flash the SD card will require that you have installed the [duckietown shell](https://github.com/duckietown/duckietown-shell). 
+To flash the SD card will require that you have installed the [duckietown shell](https://github.com/duckietown/duckietown-shell). You will also need to [sign up for an account on duckietown.org](https://www.duckietown.org/site/register), and then set your token in the command line with:
 
-With the shell run the following command:
+    dts tok set ![YOUR_TOKEN]
+    
+There are more detailed instructions [in the book](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/dt_account.html). 
 
-    $ dts init_sd_card --hostname ![YOUR_ROBOT_NAME] --wifi DaffyTown:iuu4EyjwRArSBYgQeGHw5AwihJis2T2Nv5sURFW --configuration daffy
+To burn the SD card with the shell run the following command:
+
+    dts init_sd_card --hostname ![YOUR_ROBOT_NAME] --wifi DaffyTown:iuu4EyjwRArSBYgQeGHw5AwihJis2T2Nv5sURFW --configuration daffy
     
 Note: if you plan to take your robot home with you sometimes, you may want to also add the wifi credentials of your home network. You can do so by following the [syntax here](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/setup_duckiebot.html). If you don't know your wifi credentials off by heart you can always set them later by ssh'ing into your robot edit the file `etc/wpa_supplicant/wpa_supplicant.conf` to add a new block with your wifi credentials. It's pretty straightforward, just leave the DaffyTown block there so that the robot will always be able to connect when you come to the lab. 
 
@@ -66,3 +70,22 @@ Please take a short video of your robot doing lane following in the lab with you
 Follow [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/take_a_log.html) to take a log. Don't do the "Full logging" option just use `make_log_docker`
 
 
+
+
+# Some Helpful Tips and Tricks
+
+## Mac OSX
+
+If you are Mac OSX user, you are going to need to deal with the X forwarding which is a little more difficult than on Ubuntu. See [Sec 1.4 on the laptop setup page](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/laptop_setup.html).
+
+## Connecting to your Duckiebot
+
+If your laptop and your Duckiebot are on the same network you can connect through secure shell (ssh). Unless you changed it when you burned the sd card the default linux username is `duckie` and the password is `quackquack`.
+ 
+    ssh duckie@![ROBOT_NAME].local
+     
+how does this work? it's basically magic. 
+ 
+## Portainer
+
+However you should rarely (if ever) need to ssh into your robot (updating the wireless connection config is one rare example), because there is a web interface that allows you to directly monitor everything that's going on called Portainer. Navigate to the web address `![DUCKIEBOT_NAME].local:9000`. From there you can see which images are loaded and which containers are running. You can also see the output of the containers and even get a command line inside each container. 
