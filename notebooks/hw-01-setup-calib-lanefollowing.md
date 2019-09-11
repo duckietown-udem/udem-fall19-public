@@ -33,31 +33,34 @@ This will take some time because you will need to pull some docker images which 
 
 # Step 2 - Boot your Duckiebot
 
-You need to insert your SD card into the Raspberry Pi on your robot and then connect the battery. You should see TODO
-
+You need to insert your SD card into the Raspberry Pi on your robot and then connect the battery. You should see your LED lights go white. Once your robot is fully booted the lights will turn off. **Important** do not interrupt power while the Duckiebot is booting up the first time. It will results in an unstable state and you will probably have to start over. 
 On first boot, the robot takes a relatively long time to initialize. It is extracting and loading the Docker images that you loaded on the SD card. 
 
-You know it's done when TODO
+Getting impatient? You can see the progress by ssh'ing into the robot and doing:
+
+    cat /data/boot-log.txt
+    
+When all the images are loaded you will see a last message indicating so. 
 
 # Step 3 - Make your Duckiebot move
 
-Make sure your robot moves with [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/rc_control.html).
+Make sure your robot moves with [these instructions](http://docs.duckietown.org/daffy/opmanual_duckiebot/out/rc_control.html).
 
 # Step 4 - View the camera output
 
-View the camera feed from your camera with [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/read_camera_data.html)
+View the camera feed from your camera with [these instructions](http://docs.duckietown.org/daffy/opmanual_duckiebot/out/read_camera_data.html)
 
 # Step 5 - Calibrate your camera
 
-Every camera is a little bit different and every camera is mounted a little bit differently. For this reason we need to calibrate what's called the "intrinsic" and "extrinsic" parameters of your camera. Follow [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/camera_calib.html)
+Every camera is a little bit different and every camera is mounted a little bit differently. For this reason we need to calibrate what's called the "intrinsic" and "extrinsic" parameters of your camera. Follow [these instructions](http://docs.duckietown.org/daffy/opmanual_duckiebot/out/camera_calib.html)
 
 # Step 6 - Calibrate your motors
 
-Similarly, every motor is a little bit different. We want it to be the case that when you apply the same signal to each motor, the robot goes straight forward at a roughly predicable speed. To calibrate the trim and gain of your motors follow [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/wheel_calibration.html)
+Similarly, every motor is a little bit different. We want it to be the case that when you apply the same signal to each motor, the robot goes straight forward at a roughly predicable speed. To calibrate the trim and gain of your motors follow [these instructions](http://docs.duckietown.org/daffy/opmanual_duckiebot/out/wheel_calibration.html)
 
 # Step 7 - Run the lane following demo
 
-To see that all the previous steps are working correctly, try to get your robot to follow a lane in Duckietown. Don't worry for now what happens when it get's to intersections, we'll worry about that later. Mostly we will follow [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/demo_lane_following.html) except for the first `dts` command please do the following:
+To see that all the previous steps are working correctly, try to get your robot to follow a lane in Duckietown. Don't worry for now what happens when it get's to intersections, we'll worry about that later. Mostly we will follow [these instructions](http://docs.duckietown.org/daffy/opmanual_duckiebot/out/demo_lane_following.html) except for the first `dts` command please do the following:
 
     dts duckiebot demo --demo_name lane_following --duckiebot_name ![DUCKIEBOT_NAME] --package_name duckietown_demos --image duckietown/dt-core:daffy
     
@@ -67,7 +70,7 @@ Please take a short video of your robot doing lane following in the lab with you
 
 # Step 8 - Record a log
 
-Follow [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/take_a_log.html) to take a log. Don't do the "Full logging" option just use `make_log_docker`
+Follow [these instructions](http://docs.duckietown.org/daffy/opmanual_duckiebot/out/take_a_log.html) to take a log. Don't do the "Full logging" option just use `make_log_docker`
 
 
 
@@ -76,7 +79,7 @@ Follow [these instructions](http://docs.duckietown.org/DT19/opmanual_duckiebot/o
 
 ## Mac OSX
 
-If you are Mac OSX user, you are going to need to deal with the X forwarding which is a little more difficult than on Ubuntu. See [Sec 1.4 on the laptop setup page](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/laptop_setup.html).
+If you are Mac OSX user, you are going to need to deal with the X forwarding which is a little more difficult than on Ubuntu. See [Sec 1.4 on the laptop setup page](http://docs.duckietown.org/daffy/opmanual_duckiebot/out/laptop_setup.html).
 
 ## Connecting to your Duckiebot
 
