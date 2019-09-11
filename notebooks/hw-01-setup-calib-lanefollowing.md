@@ -27,9 +27,9 @@ There are more detailed instructions [in the book](http://docs.duckietown.org/DT
 
 To burn the SD card with the shell run the following command:
 
-    dts init_sd_card --hostname ![YOUR_ROBOT_NAME] --wifi DaffyTown:iuu4EyjwRArSBYgQeGHw5AwihJis2T2Nv5sURFW --configuration daffy
+    dts init_sd_card --hostname ![YOUR_ROBOT_NAME] --wifi DaffyTown:iuu4EyjwRArSBYgQeGHw5AwihJis2T2Nv5sURFW,duckietown:quackquack --configuration daffy
     
-Note: If you plan to occasionally take your robot home with you, you may want to also add the Wifi credentials of your home network. You can do so by following the [syntax here](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/setup_duckiebot.html). If you don't have the credentials now, you can postpone this step, and later `ssh` into your robot and edit `etc/wpa_supplicant/wpa_supplicant.conf` to add a new block with your Wifi credentials. As long as you leave the Daffytown credentials (i.e append your home network's, don't replace the Daffytown block), you should always be able to connect while you are in the UdeM lab.
+**Note**: If you plan to occasionally take your robot home with you, you may want to also add the Wifi credentials of your home network. You can do so by following the [syntax here](http://docs.duckietown.org/DT19/opmanual_duckiebot/out/setup_duckiebot.html). If you don't have the credentials now, you can postpone this step, and later `ssh` into your robot and edit `etc/wpa_supplicant/wpa_supplicant.conf` to add a new block with your Wifi credentials. As long as you leave the Daffytown credentials (i.e append your home network's, don't replace the Daffytown block), you should always be able to connect while you are in the UdeM lab.
 
 These steps will pull Docker images onto your robot, and may take an extended period of time.
 
