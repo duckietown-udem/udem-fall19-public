@@ -1,4 +1,9 @@
+# Hardware Exercise 1: Setup, Calibration and Lane Following
+
+
+
 # Duckietown Hardware Exercise 1: Getting Started
+
 
 Duckietown is a unique course, as it offers both a software and hardware component. In this exercise, we will be getting started with your Duckiebot, and running some simple commands and demos on it. Specifically, the objectives we'll achieve by the end of the exercise are: 
 
@@ -81,7 +86,7 @@ You are to submit a `zip` file containing:
 - the short video (Step 7)
 - the log file (Step 8)
 
-Please follow the submission instructions posted on Piazza.
+Please to [this link posted on Piazza](https://www.dropbox.com/request/vMaywZNxHn8zz4pIEbiI).
 
 ## Some Helpful Tips and Tricks
 
