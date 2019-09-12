@@ -40,10 +40,18 @@ These steps will pull Docker images onto your robot, and may take an extended pe
 
 ## Step 2 - Booting Your Duckiebot
 
-You need to insert your SD card into the Raspberry Pi on your robot and then connect the battery. You should see your LED lights go white. Once your robot is fully booted the lights will turn off. **Important** do not interrupt power while the Duckiebot is booting up the first time. It will results in an unstable state and you will probably have to start over. 
+You need to insert your SD card into the Raspberry Pi on your robot and then connect the battery. You may need a pair of pliers to insert the SD card - it goes into the slot right under the top deck of your robot and it's hard to slide it in with your fingers (admittedly not great design). Once you connect the USB power cords to your battery, you should see your LED lights on your Duckiebot (there's 5, 3 in front and 2 in back) go white. 
+
+You should also immediately see the green LED of the Raspberry Pi next to where the SD card was inserted start to blink with activity.
+
+If not, stop, as there is a problem with the SD card initialization (or possibly the Raspberry Pi, but this is unlikely).
+
+After some time, the red and the green LEDs of the Raspberry Pi will start to blink alternately. This means that the necessary Docker containers are being extracted. When the process is finished the red LED will be off and the green will be on.
+
+**Important** do not interrupt power while the Duckiebot is booting up the first time. It will results in an unstable state and you will probably have to start over. 
 On first boot, the robot takes a relatively long time to initialize. It is extracting and loading the Docker images that you loaded on the SD card. 
 
-Getting impatient? You can see the progress by ssh'ing into the robot and doing:
+Getting impatient? You can see the progress by ssh'ing (see instructions below) into the robot and doing:
 
     cat /data/boot-log.txt
     
