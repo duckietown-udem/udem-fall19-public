@@ -12,7 +12,7 @@ RUN python3 -m pip install pip -U \
     && rm -r /root/.cache/pip
 
 RUN apt-get install python3-pip
-RUN pip3 install rospkg catkin_pkg pyyaml jupyros
+RUN pip3 install rospkg catkin_pkg pyyaml jupyros==0.2.0
 RUN jupyter nbextension enable --py --sys-prefix jupyros
 
 RUN mkdir duckietown
