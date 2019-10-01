@@ -45,7 +45,7 @@ class Controller():
         iterations = 0
         
         lookup_distance = follow_dist
-        multipler = 0.5
+        multiplier = 0.5
         curve_point = None
         
         while iterations < 10:            
