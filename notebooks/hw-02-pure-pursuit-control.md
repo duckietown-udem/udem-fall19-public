@@ -17,7 +17,7 @@ then pull from the upstream
     
 
 
-## Test to see if things are working - Run the lane following demo in the sim
+## Test to see if things are working - Run the lane following demo in the simulator
 
 from the `udem-fall19-public` directory run:
 
@@ -32,45 +32,47 @@ Starting udem-fall19_novnc_1        ... done
 Recreating udem-fall19_lanefollow_1 ... done
 ```
 
-Note that thesimulator is now running in its own container. 
+Note that the simulator now runs in its own container. 
 
 You can open the notebook just like before by copying the url that looks like:
 
-    http://127.0.0.1:8888/?token=<aaaaannnnn123123123123....>
+    http://127.0.0.1:8888/?token={SOME_LONG_TOKEN}
 
 into your browser. 
 
-You no longer need to build the `custom_ws` only the `catkin_ws`:
+You no longer need to build the `custom_ws`, but rather only the `catkin_ws`:
 
     $ catkin build --workspace catkin_ws
     $ source catkin_ws/devel/setup.bash
     
-If this is your first time it will take ~5 mins or so but since we mount things the build artifacts are preserved.
-You also need to manually start the "car interface" which runs the inverse kinematics.
+If this is the initial build, it will take around five minutes; Due to the `docker` mounts, the build artifacts will persist, so subsequent builds will be much faster.
+
+You also need to manually start the `car_interface`, which runs the inverse kinematics.
+
 You can do this with:
 
     $ ./launch_car_interface.sh
 
-Now you can run any demo in the duckietown codebase. Let's test out one that you have experience with already:
+Now you can run any demo in the Duckietown codebase. Let's test out one that you have experience with already:
 
     $ roslaunch duckietown_demos lane_following.launch
 
-which is the launch file that is run when you executed `dts duckiebot demo --package_name duckietown_demos --demo_name lane_following` in the last hardware exercise (now you can see what the `package_name` and `demo_name` flags do...).
+which is the launch file that was run when you previously executed `dts duckiebot demo --package_name duckietown_demos --demo_name lane_following` in the last hardware exercise (Here's a good way to see what the `package_name` and `demo_name` flags were doing with the old workflow).
 
 You should see the nodes launch. 
 
 ### Visualization and Debugging
 
-We've recently changed the workflow for viewing the output to avoid having to use X. Now we are going to use `noVNC`. In your browser, enter the url `http://localhost:6901/vnc.html`. This should take you to a login page. The password is `vncpassword`. 
+We've recently changed the workflow for viewing the output to avoid having to use X. Now, we are going to use `noVNC`. In your browser, enter the url `http://localhost:6901/vnc.html`, which will bring you to a login page. The password is `vncpassword`. 
 
-Once inside, you have pretty functional environment where you can launch windows inside the browser. Under "Applications" in the top left you can open a terminal. In the terminal you can run `rqt_image_view` just like before and choose an output to view. 
+Once inside, you have a standard GUI environment. From here, you can launch windows inside the browser. Under "Applications" in the top left you can open a terminal. In the terminal, you can run `rqt_image_view` just like before and choose an output to view. 
 
-**NOTE* if you want to see some outputs (e.g., the `image_with_lines`) then you need to set the verbose flag to true by typing: 
+**NOTE if you want to see some outputs (e.g., the `image_with_lines`) then you need to set the verbose flag to true by typing:** 
 
     $ rosparam set /default/line_detector_node/verbose true
 
 
-You might also run `rviz` in the terminal and play around with the debugging outputs that you can add in the viewer. To do so click the "Add" button in the bottom left and then the "By topic" tab. You might find the `/duckiebot_visualizer/segment_list_markers/` and the filterer version as well as the `/lane_pose_visualizer_node/lane_pose_markers` particularly interesting.
+You might also run `rviz` in the terminal and play around with the debugging outputs that you can add in the viewer. To do so click the "Add" button in the bottom left and then the `By Topic` tab. You might find the `/duckiebot_visualizer/segment_list_markers/` and the filterer version as well as the `/lane_pose_visualizer_node/lane_pose_markers` particularly interesting.
 
 ### Making the Robot Move in Simulator
 
@@ -80,8 +82,9 @@ To remedy the situation you will need to use the virtual joystick just like you 
 
     $ dts duckiebot keyboard_control default --network <network_name>  --sim [--cli] --base_image duckietown/dt-core:daffy
     
-where you can find the `network_name` by running `docker network ps` and look for the right one. It's probably something like `udem-fall19-public_duckietown-docker-net`. The `--cli` is optional but for example if you are running on Mac then the gui is not supported. 
-Now you should be able to use the keyboard to make the duckiebot move and also start it doing autonomous lane following. 
+where you can find the `network_name` by running `docker network ps` and look for the right one. Likely, the network looks like `udem-fall19-public_duckietown-docker-net`. The `--cli` is optional, but if you are running on Mac, then the GUI is not supported. 
+
+Now, you should be able to use the keyboard to make the Duckiebot move and also have it starting doing autonomous lane following. 
 
 We have now completely reproduced the lane following demo but in the simulator. 
 
