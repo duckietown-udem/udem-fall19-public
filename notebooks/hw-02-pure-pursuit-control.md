@@ -57,7 +57,7 @@ Now you can run any demo in the Duckietown codebase. Let's test out one that you
 
     $ roslaunch duckietown_demos lane_following.launch
 
-which is the launch file that was run when you previously executed `dts duckiebot demo --package_name duckietown_demos --demo_name lane_following` in the last hardware exercise (Here's a good way to see what the `package_name` and `demo_name` flags were doing with the old workflow).
+which is the launch file that was run when you previously executed `dts duckiebot demo --package_name duckietown_demos --demo_name lane_following` in the last hardware exercise (This is exactly what the  `package_name` and `demo_name` flags do when you run `dts duckiebot demo`).
 
 You should see the nodes launch. 
 
@@ -94,6 +94,8 @@ We have now completely reproduced the lane following demo but in the simulator.
 Now we are going to discuss how you might build a new node and incorporate it into the structure of an existing demo. You will be able to test the performance first in the simulator and then try it on the robot. 
 
 Follow the instructions [here](https://github.com/duckietown/template-ros-core) to create a new repo for your packages. Clone this repo inside the folder `udem-fall19-public/catkin_ws/src`. You can now add packages inside the `packages` folder of that repo. 
+
+**Important** put your name in the name of your repo.
 
 Any packages that you put in there will be built when you run:
 
@@ -147,6 +149,17 @@ The algorithm to follow should be roughly the following:
 
 We have provided a function that filters the lane detections and publishes only the inliers. This might be a better choice for this algorithm. It is published by the `lane_filter`. 
 
-This algorithm is a bit more difficult to implement than some of the other exercises we've seen in this class, and may require a good amount of debugging. Start early!
+This exercise is a bit more difficult to implement than some of the others. It may  require a good amount of debugging, and good performance is not guaranteed. Suggest not to leave to the last minute!
 
+## Deliverables
+
+Inside the report.txt file include:
+
+ - the name of the repo that you created
+ - the name of the docker image that you built and pushed
+ - a video of your Duckiebot executing lane following 
+ - the time it took to complete the course (+ 2 seconds for every tile where there was a lane violation)
+ - A plot of the two control values as well as the estimate of two errors (cross-track and angle) from the perception system vs. time
+ 
+ 
 
