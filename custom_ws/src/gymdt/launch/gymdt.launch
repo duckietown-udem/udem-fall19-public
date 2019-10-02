@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launch>
+  <group ns="$(env HOSTNAME)">
+    <remap from="image/compressed" to="camera_node/image/compressed"/>
+        <node name="gymdt" pkg="gymdt" type="gymdt_node.py" />
+    </group>
+</launch>
