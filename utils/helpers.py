@@ -448,5 +448,46 @@ def load_env_obstacles(local_env):
             tile = local_env.grid[j * local_env.grid_width + i]
             if not tile['drivable']:
                 coords = tile['coords']
-                list_obstacles.append([(coords[0]+.5)*local_env.road_tile_size, (coords[1]+.5)*local_env.road_tile_size, 1.3*local_env.road_tile_size + 2*robot_radius])
+                list_obstacles.append([(coords[0]+.5) * local_env.road_tile_size, (coords[1]+.5) * local_env.road_tile_size, 1.3*local_env.road_tile_size + 2*robot_radius])
     return list_obstacles
+
+def proportional_next_point_controller(local_env, new_path):
+    # Desired position is next point of the path
+    next_pos = new_path[-2]
+    # Current position and angle
+    cur_pos_x = local_env.cur_pos[0]
+    cur_pos_y = local_env.cur_pos[2]
+    cur_angle = local_env.cur_angle
+
+    ### Step 1: turn to reach the right angle
+    # Angle that we need to reach
+    x_diff = next_pos[0] - cur_pos_x
+    y_diff = next_pos[1] - cur_pos_y
+    angle_to_be = -1 * np.angle(x_diff + y_diff * 1j) # Negative because of frame mismatch
+
+    # Turning with P control
+    while math.fabs(local_env.cur_angle%(2*np.pi) - angle_to_be%(2*np.pi)) > 0.05:
+        v = 0.
+        omega = (angle_to_be%(2*np.pi) - local_env.cur_angle%(2*np.pi) )
+        obs, _, d, _ = local_env.step([v, omega])
+        if d:
+            print("Crash")
+            break
+
+    ### Step 2: move towards goal
+    # Compute distance
+    dist =  get_dist_to_goal(local_env.cur_pos, goal)
+    last_dist = math.inf
+    # Move forward until you reach the goal
+    while dist > 0.02 and last_dist > dist:
+        omega = 0
+        v = dist
+        obs, _, d, _ = local_env.step([v, omega])
+        last_dist = dist
+        dist = get_dist_to_goal(local_env.cur_pos, goal)
+        if d:
+            print("Crash")
+            break
+            
+def get_dist_to_goal(cur_pos, goal):
+    return math.sqrt((cur_pos[0] - goal[0])**2 + (cur_pos[2] - goal[1])**2)
