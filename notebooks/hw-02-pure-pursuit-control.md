@@ -106,10 +106,9 @@ If you have added a new launch file then you can launch it from the notebook ter
     $ roslaunch <your_package_name> <your_launch_file_name>
 
 
-A good way to build your own launch file might be to figure out what's actually happening in the `lane_following.launch` file in duckietown_demos in dt-core and use this as a template to create your own thing. I.e., turn off the "args" that correspond to the new nodes that you don't want to run and then add your own includes or node launching code after. 
+A good way to build your own launch file would be to use the provided launchfile, `lane_following.launch`, as a template. You can find this file in `duckietown_demos` in `dt-core`. You can "turn off" the `args` that correspond to the new nodes that you don't want to run and then add your own `include`s or `<node>` launching code after. You'll want to create a new launchfile, rather than editing the original `lane_following.launch`. 
 
 ## Trying your code on the robot
-
 
 Once you are happy with the operation of your new package, you can try it on the robot. Go into your repo's base directory (the one you made from the template) and run:
 
@@ -134,9 +133,9 @@ In this exercise we are going to replace the existing PD controller with a pure 
 
 One issue discussed in class with respect to implementation of the pure pursuit controller is that it requires a reference _trajectory_ rather than just a reference value with which we can compute the tracking error. 
 
-In order to implement the pure pursuit controller, we need to be able to calculate \alpha. 
+In order to implement the pure pursuit controller, we need to be able to calculate $\alpha$. 
 
-I propose that we can calculate an esitimate of \alpha directly from the line detections projected onto the ground plane. 
+We can calculate an esitimate of $\alpha$ directly from the line detections projected onto the ground plane. 
 
 The output of the ground projection node provides ground plane endpoints (in the robot frame) of the lines that are detected, along with their color. 
 
@@ -148,8 +147,6 @@ The algorithm to follow should be roughly the following:
 
 We have provided a function that filters the lane detections and publishes only the inliers. This might be a better choice for this algorithm. It is published by the `lane_filter`. 
 
-
-
-Note: I'm not really sure if this will actually work or not... let's see
+This algorithm is a bit more difficult to implement than some of the other exercises we've seen in this class, and may require a good amount of debugging. Start early!
 
 
