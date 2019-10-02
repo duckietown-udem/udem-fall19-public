@@ -38,7 +38,7 @@ You can open the notebook just like before by copying the url that looks like:
 
     http://127.0.0.1:8888/?token=<aaaaannnnn123123123123....>
 
-into your browser. 
+into your browser and open a terminal. 
 
 You no longer need to build the `custom_ws` only the `catkin_ws`:
 
