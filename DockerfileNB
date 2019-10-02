@@ -2,7 +2,7 @@
 FROM osrf/ros:melodic-desktop-full-bionic
 
 RUN apt-get update \
-    && apt-get install -y python3-pip python-catkin-tools  build-essential xvfb python-frozendict ffmpeg python-ruamel.yaml \
+    && apt-get install -y python3-pip python-catkin-tools  build-essential xvfb python-frozendict ffmpeg python-ruamel.yaml python3-tk\
     && apt-get -y autoremove \
     && apt-get -y clean  \
     && rm -rf /var/lib/apt/lists/*
@@ -19,12 +19,16 @@ RUN mkdir duckietown
 COPY setup/requirements.txt duckietown
 COPY setup/initial.sh duckietown
 
-RUN cd duckietown && ./initial.sh 
-
 COPY setup/run_display.bash duckietown
 RUN chmod u+x duckietown/run_display.bash
 
-RUN echo 'source custom_ws/devel/setup.bash' >> ~/.bashrc 
+RUN cd duckietown && ./initial.sh 
+
+RUN echo 'source catkin_ws/devel/setup.bash' >> ~/.bashrc
+
+RUN echo 'echo if you got a message about "catkin_ws/devel/setup.bash does not exist" then you need to build the catkin_ws with "catkin build --workspace catkin_ws" ' >> ~/.bashrc
+
+RUN echo 'echo don't forget to start the car_interface if you haven't already with ./launch_car_interface.sh ' >> ~/.bashrc
 
 ENV ROS_PYTHON_VERSION 3
 ENV SHELL /bin/bash
@@ -39,5 +43,8 @@ RUN python get-pip.py
 COPY setup/requirementspy2.txt duckietown
 RUN python -m pip install -r duckietown/requirementspy2.txt
 
+COPY setup/launch_car_interface.sh duckietown
+
 WORKDIR /duckietown
-CMD ./run_display.bash && jupyter-notebook --allow-root --ip="*" --no-browser 
+CMD  rm -f /tmp/.X99-lock &&  ./run_display.bash &&  jupyter-notebook --allow-root --ip="*" --no-browser 
+

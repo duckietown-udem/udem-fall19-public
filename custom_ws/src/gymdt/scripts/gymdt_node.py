@@ -8,7 +8,7 @@ from utils.ros_helpers import launch_env
 
 import rospy
 from sensor_msgs.msg import CompressedImage, CameraInfo
-from duckietown_msgs.msg import Twist2DStamped, WheelsCmdStamped
+from gymdt.msg import Twist2DStamped, WheelsCmdStamped
 import numpy as np
 import os
 import cv2
@@ -17,8 +17,7 @@ import cv2
 class ROSAgent(object):
     def __init__(self):
         # Get the vehicle name, which comes in as HOSTNAME
-        # self.vehicle = os.getenv('HOSTNAME')
-        self.vehicle = 'baseline'
+        self.vehicle = os.getenv('HOSTNAME')
 
         self.ik_action_sub = rospy.Subscriber('/{}/wheels_driver_node/wheels_cmd'.format(
             self.vehicle), WheelsCmdStamped, self._ik_action_cb)
@@ -28,7 +27,7 @@ class ROSAgent(object):
 
         # Publishes onto the corrected image topic 
         # since image out of simulator is currently rectified
-        self.cam_pub = rospy.Publisher('/{}/corrected_image/compressed'.format(
+        self.cam_pub = rospy.Publisher('/{}/image/compressed'.format(
             self.vehicle), CompressedImage, queue_size=10)
         
         # Publisher for camera info - needed for the ground_projection
