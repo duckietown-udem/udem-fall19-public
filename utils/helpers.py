@@ -476,7 +476,7 @@ def proportional_next_point_controller(local_env, new_path):
 
     ### Step 2: move towards goal
     # Compute distance
-    dist =  get_dist_to_goal(local_env.cur_pos, goal)
+    dist =  get_dist_to_goal(local_env.cur_pos, next_pos)
     last_dist = math.inf
     # Move forward until you reach the goal
     while dist > 0.02 and last_dist > dist:
@@ -484,7 +484,7 @@ def proportional_next_point_controller(local_env, new_path):
         v = dist
         obs, _, d, _ = local_env.step([v, omega])
         last_dist = dist
-        dist = get_dist_to_goal(local_env.cur_pos, goal)
+        dist = get_dist_to_goal(local_env.cur_pos, next_pos)
         if d:
             print("Crash")
             break
