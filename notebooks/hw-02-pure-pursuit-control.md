@@ -87,7 +87,7 @@ To remedy the situation you will need to use the virtual joystick just like you 
 
     $ dts duckiebot keyboard_control default --network <network_name>  --sim [--cli] --base_image duckietown/dt-core:daffy
     
-where you can find the `network_name` by running `docker network ps` and look for the right one. Likely, the network looks like `udem-fall19-public_duckietown-docker-net`. The `--cli` is optional, but if you are running on Mac, then the GUI is not supported. 
+where you can find the `network_name` by running `docker network ls` and look for the right one. Likely, the network looks like `udem-fall19-public_duckietown-docker-net`. The `--cli` is optional, but if you are running on Mac, then the GUI is not supported. 
 
 Now, you should be able to use the keyboard to make the Duckiebot move and also have it starting doing autonomous lane following. 
 
