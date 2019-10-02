@@ -17,7 +17,7 @@ then pull from the upstream
 
 and update your submodules to the `daffy` branch
 
-    $ git submodule foreach "(git checkout daffy; git pull)&"
+    $ git submodule foreach "(git checkout daffy; git pull)"
 
 
 ## Test to see if things are working - Run the lane following demo in the simulator
