@@ -13,7 +13,12 @@ If you are using a fork, then you are going to need to pull from the upstream re
 
 then pull from the upstream
 
-    $ git pull upstream master --recurse-submodules
+    $ git pull upstream master 
+
+and update your submodules
+    
+    $ git submodule init
+    $ git submodule update
     
 
 
