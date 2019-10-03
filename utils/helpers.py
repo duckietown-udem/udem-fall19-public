@@ -472,7 +472,7 @@ def proportional_next_point_controller(local_env, new_path):
         obs, _, d, _ = local_env.step([v, omega])
         if d:
             print("Crash")
-            break
+            return d
 
     ### Step 2: move towards goal
     # Compute distance
@@ -487,7 +487,8 @@ def proportional_next_point_controller(local_env, new_path):
         dist = get_dist_to_goal(local_env.cur_pos, next_pos)
         if d:
             print("Crash")
-            break
+            return d
+    return d
             
 def get_dist_to_goal(cur_pos, goal):
     return math.sqrt((cur_pos[0] - goal[0])**2 + (cur_pos[2] - goal[1])**2)
