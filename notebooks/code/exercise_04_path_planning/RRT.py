@@ -159,7 +159,7 @@ class RRT_planner:
             list_dist_y = [ob_y - y for y in node.path_y]
             d_list = [dx * dx + dy * dy for (dx, dy) in zip(list_dist_x, list_dist_y)]
 
-            if min(d_list) <= size/2 ** 2:
+            if min(d_list) <= (size/2) ** 2:
                 return True 
 
         return False     
