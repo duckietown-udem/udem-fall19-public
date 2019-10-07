@@ -17,6 +17,8 @@ then pull from the upstream
 
 and update your submodules to the `daffy` branch
 
+    $ git submodule init
+    $ git submodule update
     $ git submodule foreach "(git checkout daffy; git pull)"
 
 
