@@ -22,7 +22,7 @@ services:
         - "ROS_MASTER_URI=http://sim:11311"
         - "HOSTNAME=default"
         - "VEHICLE_NAME=default"
-        - "DISPLAY:=99"
+        - "DISPLAY=:99"
         expose:
         - "8888"
         ports:
