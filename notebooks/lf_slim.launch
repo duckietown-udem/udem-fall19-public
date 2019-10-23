@@ -13,11 +13,6 @@
     <arg name="/lane_following/ground_projection" default="true"/>
     <arg name="/lane_following/lane_controller" default="true"/>
 
-    <arg name="inverse_kinematics" default="true"/>
-
-    <group>
-        <node name="gymdt" pkg="gymdt" type="gymdt_node.py" />
-    </group>
 
     <group if="$(arg lane_following)">
 
@@ -62,16 +57,6 @@
                     <arg name="param_file_name" value="$(arg param_file_name)"/>
                 </include>
             </group>
-
-            <!-- Inverse Kinematic Node -->
-            <group if="$(arg inverse_kinematics)">
-                <remap from="inverse_kinematics_node/car_cmd" to="lane_controller_node/car_cmd"/>
-                <remap from="inverse_kinematics_node/wheels_cmd" to="wheels_driver_node/wheels_cmd" />
-                <include file="$(find dagu_car)/launch/inverse_kinematics_node.launch">
-                    <arg name="veh" value="$(arg veh)"/>
-                </include>
-            </group>
-
     </group> -->
     <!-- End Lane Control -->
 </launch>

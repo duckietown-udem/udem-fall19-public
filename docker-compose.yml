@@ -29,10 +29,7 @@ services:
         - "8888:8888"
 
     novnc:
-        image: duckietown/dt-novnc:udem
-        build:
-            context: .
-            dockerfile: DockerfileNoVNC
+        image: duckietown/docker-ros-vnc:daffy
         networks:
         - duckietown-docker-net
         environment:
