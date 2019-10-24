@@ -68,7 +68,7 @@ You should see the nodes launch.
 
 ### Visualization and Debugging
 
-We've recently changed the workflow for viewing the output to avoid having to use X. Now, we are going to use `noVNC`. In your browser, enter the url `http://localhost:6901/vnc.html`, which will bring you to a login page. The password is `vncpassword`. 
+We've recently changed the workflow for viewing the output to avoid having to use X. Now, we are going to use `noVNC`. In your browser, enter the url `http://localhost:6901/vnc.html`, which will bring you to a login page. The password is `quackquack`. 
 
 Once inside, you have a standard GUI environment. From here, you can launch windows inside the browser. Under "Applications" in the top left you can open a terminal. In the terminal, you can run `rqt_image_view` just like before and choose an output to view. 
 
