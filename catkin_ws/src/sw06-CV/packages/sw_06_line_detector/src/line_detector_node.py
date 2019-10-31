@@ -59,8 +59,6 @@ class LineDetectorNode(object):
         self.sub_fsm = rospy.Subscriber("~fsm_mode", FSMState, self.cbFSM, queue_size=1)
 
         rospy.loginfo("[%s] Initialized (verbose = %s)." %(self.node_name, self.verbose))
-        #rospy.loginfo("[%s] IT'S MEEEEEEEE (verbose = %s)." %(self.node_name, self.verbose))
-        rospy.loginfo("[%s] IT'S MEEEEEEEE AGAIIIIIIN (verbose = %s)." %(self.node_name, self.verbose))
 
         rospy.Timer(rospy.Duration.from_sec(2.0), self.updateParams)
 

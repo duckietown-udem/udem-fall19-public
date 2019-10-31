@@ -11,7 +11,6 @@ class LineDetectorHSV(dtu.Configurable, LineDetectorInterface):
     """ LineDetectorHSV """
 
     def __init__(self, configuration):
-        rospy.loginfo("Initialized line detector 2 --------------------------------------")
         # Images to be processed
         self.bgr = np.empty(0)
         self.hsv = np.empty(0)
