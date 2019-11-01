@@ -12,7 +12,7 @@ import matplotlib.pyplot as plt
 from aido_schemas import EpisodeStart, protocol_agent_duckiebot1, PWMCommands, Duckiebot1Commands, LEDSCommands, RGB, \
     wrap_direct, Context, Duckiebot1Observations, JPGImage, Context
     
-from simulation.gym_duckietown.simulator import Simulator
+from simulation.src.gym_duckietown.simulator import Simulator
 class AIDOSubmission:
     def __init__(self, exercise='test'):
         self.exercise = exercise
@@ -63,7 +63,7 @@ def jpg2rgb(image_data: bytes) -> np.ndarray:
     return data
 
 def launch_env(simclass=None, map_name = "loop_empty"):
-    from simulation.gym_duckietown.simulator import Simulator
+    from simulation.src.gym_duckietown.simulator import Simulator
 
     simclass = Simulator if simclass is None else simclass
     
