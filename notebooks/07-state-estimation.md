@@ -131,7 +131,7 @@
   When predicting the new _d_, you will need to take into account the angle _phi_.
   
   ##### `Particle.update(self, ds, phis)`
-  How can you estimate the likelihood of the measurements given this particular particle? _Suggestion: remember how it was done in the histogram filter. Maybe you can compute a distance to each pair of (d,phi) and compute a score based on the quantity of pairs that is not further than a threshold? Other ideas are welcome too!_
+  How can you estimate the likelihood of the measurements given this particular particle? Here, the _d_ and _phi_ values for a given segment can be recovered using function `self.process(segment)`. _Suggestion: remember how it was done in the histogram filter. Maybe you can compute a distance from your particle to each measured pair of (d,phi) and compute a score based on the quantity of pairs that is not further than a given threshold? Other ideas are welcome too!_
   
   ##### `lane_filter.initialize(self)`
   Initialize the particle set using a given distribution. You can use the initialization parameters. Would sampling from a Gaussian distribution be a good idea? Could you also want to sample from an uniform distribution, in order to be able to recover from an initial state that is far from the Gaussian center?
