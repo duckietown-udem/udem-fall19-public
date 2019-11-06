@@ -29,6 +29,13 @@
   $ git submodule update
   $ git submodule foreach "(git checkout daffy; git pull)"
   ```
+  
+  Checkout to the right commit for simulation:
+  
+  ```
+  cd simulation
+  git checkout 4693556
+  ```
    
   You will find in `catkin_ws/src` a folder named `sw07-SE`. There, in the `packages` repo, you will find the ROS package `sw_07_lane_filter`. This is where you will work.
   
