@@ -85,8 +85,8 @@
   There are 4 important calls made to `self.filter`:
   1. `self.filter.predict(dt=dt, v=v, w=w)` is the prediction step - it propagates the dynamic model of the system on the belief.
   2. `self.filter.update(segment_list_msg.segments)` is the measurement update step - it corrects the belief based on the sensor measurements.
-  3. `self.filter.getEstimate()` is a function that outputs the filter's estimate as a pair of values, _phi_ and _d_. This pair is chosen as the one with the maximal belief: it is "maximum a posteriori" estimation.
-  4. `self.filter.isInLane()` allows to detect if the Duckiebot is in the lane or completely out. To do so, it checks if the measurements have led the belief seems to converge to one particular _phi_ and _d_ pair, which means that they are coherent with the expected measurement while in the lane. Otherwise, if the measurements do not seem to converge, it means that the Duckiebot is out of a lane.
+  3. `self.filter.getEstimate()` is a function that outputs the filter's estimate as a single pair of values, _phi_ and _d_. This pair is chosen as the one with the maximal belief: it is "maximum a posteriori" estimation.
+  4. `self.filter.isInLane()` allows to detect if the Duckiebot is in the lane or completely out. To do so, it checks if the measurements have led the belief to converge to one particular _phi_ and _d_ pair, which means that they are coherent with the expected measurement while in the lane. Otherwise, if the measurements do not seem to converge, it means that the Duckiebot is out of a lane.
    
   
    
