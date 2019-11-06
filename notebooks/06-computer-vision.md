@@ -14,6 +14,12 @@
   $ git submodule update
   $ git submodule foreach "(git checkout daffy; git pull)"
   ```
+  
+  Then, checkout to the right commit for the simulation:
+  ```
+  cd simulation
+  git checkout 4693556
+  ```
    
   You will find in `catkin_ws/src` a folder named `sw06-CV`. There, in the `packages` repo, you will find the ROS package `sw_06_line_detector`. This is where you will work.
   
