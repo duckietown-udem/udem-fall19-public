@@ -64,6 +64,7 @@
   $ rosparam set /default/line_detector_node/verbose true
   ```
   
+ 
   ## The node
   Take a look at the file `src/lane_filter_node.py`. 
   2 topic subscribers manage the direct inputs to the filter, and 4 publishers manage the outputs (including visualization).
@@ -75,31 +76,23 @@
   The main filtering process happens in the callback function `processSegments(segment_list_msg)`. 
   
   There are 4 important calls made to `self.filter`:
-  1. `self.filter.predict(dt=dt, v=v, w=w)`
-  2. `self.filter.update(segment_list_msg.segments)`
-  3. `self.filter.getEstimate()`
-  4. `self.filter.isInLane()`
-  
-  **Question 2** Describe shortly the role of each of these functions in the filter.
+  1. `self.filter.predict(dt=dt, v=v, w=w)` is the prediction step - it propagates the dynamic model of the system on the belief.
+  2. `self.filter.update(segment_list_msg.segments)` is the measurement update step - it corrects the belief based on the sensor measurements.
+  3. `self.filter.getEstimate()` is a function that outputs the filter's estimate as a pair of values, _phi_ and _d_. This pair is chosen as the one with the maximal belief: it is "maximum a posteriori" estimation.
+  4. `self.filter.isInLane()` allows to detect if the Duckiebot is in the lane or completely out. To do so, it checks if the measurements have led the belief seems to converge to one particular _phi_ and _d_ pair, which means that they are coherent with the expected measurement while in the lane. Otherwise, if the measurements do not seem to converge, it means that the Duckiebot is out of a lane.
+   
   
    
   ## The histogram filter
   Now, let's get a look at the histogram filter - which is already implemented in class `LaneFilterHistogram`. In this section, there are a lot of questions. Short answers (one or two sentences) are enough. Write your answers in the `07-state-estimation.txt` file.
   
-  **Question 3**
+  **Question 2**
   How is the belief represented in the histogram filter? How is it initialized?
-  
-  **Question 4**
-  Look at the `predict` function. Describe shortly how the prediction step works. Why is a Gaussian filter applied to the new belief?
-  
-  **Question 5** Look at the measurement `update` function.   Note that from a single segment, one can geometrically determine a corresponding (_d_, _phi_) pair through simple geometric considerations. This is done in the `generateVote()` function. Knowing this, describe shortly how is the likelihood _p(z(t)|x(t))_ computed. How is the Baye's rule applied?
-  
-  **Question 6** How is the state estimated when only one value for _phi_ and _d_ is needed? See function `getEstimate()`.
-  
-  **Question 7** How is the filter detecting if the Duckiebot is in the lane or completely out? See function `isInLane()`.
-  
+
+  **Question 3** Look at the measurement `update` function.   Note that from a single segment, one can geometrically determine a corresponding (_d_, _phi_) pair through simple geometric considerations. This is done in the `generateVote()` function. Knowing this, describe shortly how is the likelihood _p(z(t)|x(t))_ computed.
+   
   ## The particle filter
-  In this part of the assignment, you will have to implement a particle fitler to the robot. The template of the filter is already there, at the beginning of the `lane_filter.py` file. To switch it on, change `self.mode` to `'particle'` in `LaneFilterNode` (lines 21-22). While it does not do anything, the current version should be running.
+  In this part of the assignment, you will have to implement a particle fitler to the robot. The template of the filter is already there, at the beginning of the `lane_filter.py` file. To switch it on, change `self.mode` to `'particle'` in `LaneFilterNode` (lines 21-22). While it does not do anything, the current version should be running without errors.
   
   ### What is a particle filter?
   A particle filter, also called a Monte Carlo filter, is a Bayesian filter that represents the belief with a set a particles. Each particle represents a possible state in which the robot can be. The particle filter algorithm works as follow:
@@ -147,19 +140,17 @@
     
  Complete these 6 functions in `lane_filter.py`. Try it on the simulation. Don't forget that you can see the belief in `rqt_image_view` on the `~belief_img` topic.
  
- **Question 8** In `07-state-estimation.txt` file, describe your implementation for each of the 6 functions.
+ **Question 4** In `07-state-estimation.txt` file, describe your implementation for each of the 6 functions.
  
- **Question 9** Does it work? If not, describe and explain what is happening?
+ **Question 5** Does it work? If not, describe and explain what is happening?
  
- **Question 10** How is the particle filter able to deal with wrong line detections, due to Duckies in the image for example?
+ **Question 6** How is the particle filter able to deal with wrong line detections, due to Duckies in the image for example?
  
- **Question 11** Would a particle filter be able to recover from a wrong estimation, or from an unexpected initial state? Which parameters have an influence here? What is the counterbalance of making the particle filter robust to such a possibility?
+ **Question 7** Would a particle filter be able to recover from a wrong estimation, or from an unexpected initial state? Which parameters have an influence here? What is the counterbalance of making the particle filter robust to such a possibility?
  
- **Question 12** What is particle depletion? What problem can it cause? How is roughening preventing it from happening?
- 
- **Question 13** Explain the influence of the number of particles. What is the limiting factor?
+ **Question 8** Explain the influence of the number of particles. What is the limiting factor?
   
- **Question 14** Compare the particle filter to the histogram filter. What are the pros and cons of each? Could a Kalman filter work here?
+ **Question 9** Compare the particle filter to the histogram filter. What are the pros and cons of each? Could a Kalman filter work here?
  
 
  
