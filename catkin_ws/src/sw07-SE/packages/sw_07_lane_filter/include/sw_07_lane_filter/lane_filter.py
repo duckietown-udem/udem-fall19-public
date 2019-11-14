@@ -15,8 +15,6 @@ import numpy as np
 
 from .lane_filter_interface import LaneFilterInterface
 
-from .visualization import plot_phi_d_diagram_bgr
-
 from scipy.stats import multivariate_normal
 from scipy.ndimage.filters import gaussian_filter
 from math import floor, sqrt
