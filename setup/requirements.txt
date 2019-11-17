@@ -24,7 +24,7 @@ numpy==1.16.2
 -e git://github.com/AndreaCensi/zuper-commons.git@z2#egg=zuper-commons
 -e git://github.com/duckietown/aido-protocols.git@z2#egg=aido-protocols
 
--e git://github.com/duckietown/duckietown-world.git@aido2#egg=duckietown-world
+-e git://github.com/duckietown/duckietown-world.git@daffy#egg=duckietown-world
 -e git://github.com/duckietown/duckietown-challenges.git@v4#egg=duckietown-challenges
 
 # Class exercises
