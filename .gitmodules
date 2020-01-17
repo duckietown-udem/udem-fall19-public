@@ -15,6 +15,6 @@
 	url = https://github.com/duckietown/dt-car-interface.git
 	branch = daffy
 [submodule "dt-experimental"]
-	path = dt-experimental
+	path = catkin_ws/src/dt-experimental
 	url = https://github.com/duckietown/dt-experimental.git
         branch = daffy
