@@ -6,8 +6,8 @@ scikit-image>=0.13.1
 pyyaml>=3.11
 cloudpickle
 duckietown_slimremote>=2018.8.2
-pygeometry
 dataclasses
+
 
 # IPython
 jupyter
@@ -18,13 +18,13 @@ ipywidgets
 
 opencv-python==4.0.0.21
 numpy==1.16.2
+duckietown-world-daffy==5.1.1
 
 -e git://github.com/AndreaCensi/zuper-utils.git@z2#egg=zuper-utils
 -e git://github.com/AndreaCensi/zuper-nodes.git@z2#egg=zuper-nodes
 -e git://github.com/AndreaCensi/zuper-commons.git@z2#egg=zuper-commons
 -e git://github.com/duckietown/aido-protocols.git@z2#egg=aido-protocols
 
--e git://github.com/duckietown/duckietown-world.git@daffy#egg=duckietown-world
 -e git://github.com/duckietown/duckietown-challenges.git@v4#egg=duckietown-challenges
 
 # Class exercises

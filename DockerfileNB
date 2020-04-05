@@ -2,7 +2,7 @@
 FROM osrf/ros:melodic-desktop-full-bionic
 
 RUN apt-get update \
-    && apt-get install -y python3-pip python-catkin-tools  build-essential xvfb python-frozendict ffmpeg python-ruamel.yaml python3-tk\
+    && apt-get install -y python3-pip  python-catkin-tools  build-essential xvfb python-frozendict ffmpeg python-ruamel.yaml python3-tk\
     && apt-get -y autoremove \
     && apt-get -y clean  \
     && rm -rf /var/lib/apt/lists/*
@@ -14,6 +14,7 @@ RUN python3 -m pip install pip -U \
 RUN apt-get install python3-pip
 RUN pip3 install rospkg catkin_pkg pyyaml jupyros==0.2.0
 RUN jupyter nbextension enable --py --sys-prefix jupyros
+
 
 RUN mkdir duckietown
 COPY setup/requirements.txt duckietown
@@ -34,14 +35,24 @@ ENV ROS_PYTHON_VERSION 3
 ENV SHELL /bin/bash
 ENV DISPLAY :99
 ENV DUCKIEFLEET_ROOT /data/config
+ENV READTHEDOCS True
 
 RUN mkdir -p /data/config
-RUN git clone https://github.com/duckietown-udem/config /data/config
+RUN git clone https://github.com/duckietown/duckiefleet /data/config
 
 RUN curl https://bootstrap.pypa.io/get-pip.py -o get-pip.py
 RUN python get-pip.py
 COPY setup/requirementspy2.txt duckietown
 RUN python -m pip install -r duckietown/requirementspy2.txt
+
+RUN mkdir duckietown/dt-ros-commons
+COPY catkin_ws/src/dt-ros-commons/dependencies-py.txt duckietown/dt-ros-commons
+RUN python -m pip install -r duckietown/dt-ros-commons/dependencies-py.txt
+
+RUN mkdir duckietown/dt-core/
+COPY catkin_ws/src/dt-core/dependencies-py.txt duckietown/dt-core
+RUN python -m pip install -r duckietown/dt-core/dependencies-py.txt
+
 
 COPY setup/launch_car_interface.sh duckietown
 

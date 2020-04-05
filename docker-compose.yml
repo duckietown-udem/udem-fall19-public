@@ -20,8 +20,8 @@ services:
         - /tmp/.X11-unix:/tmp/.X11-unix
         environment:
         - "ROS_MASTER_URI=http://sim:11311"
-        - "HOSTNAME=default"
-        - "VEHICLE_NAME=default"
+        - "HOSTNAME=sim"
+        - "VEHICLE_NAME=sim"
         - "DISPLAY=:99"
         expose:
         - "8888"
@@ -34,8 +34,8 @@ services:
         - duckietown-docker-net
         environment:
         - "ROS_MASTER_URI=http://sim:11311"
-        - "HOSTNAME=default"
-        - "VEHICLE_NAME=default"
+        - "HOSTNAME=sim"
+        - "VEHICLE_NAME=sim"
         expose:
         - "5901"
         - "6901"
@@ -55,8 +55,8 @@ services:
         - ./utils:/duckietown/utils        
         environment:
         - "ROS_MASTER_URI=http://sim:11311"
-        - "HOSTNAME=default"
-        - "VEHICLE_NAME=default"
+        - "HOSTNAME=sim"
+        - "VEHICLE_NAME=sim"
         - "DISPLAY=:99"
 
 networks:
