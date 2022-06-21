@@ -17,7 +17,7 @@ ipywidgets
 # AIDO Submission Infrastructure
 
 opencv-python==4.0.0.21
-numpy==1.16.2
+numpy==1.22.0
 duckietown-world-daffy==5.1.1
 
 -e git://github.com/AndreaCensi/zuper-utils.git@z2#egg=zuper-utils
